@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HubSpot Formular</title>
+    <style>
+        /* Entfernt unnötige Ränder, damit das Formular perfekt in Wix passt */
+        body, html { margin: 0; padding: 0; font-family: sans-serif; overflow-x: hidden; }
+    </style>
+    <script charset="utf-8" type="text/javascript" src="https://js-eu1.hsforms.net/forms/embed/v2.js"></script>
+</head>
+<body>
+    
+    <div id="hubspot-form-container"></div>
+
+    <script>
+        hbspt.forms.create({
+            region: "eu1",
+            portalId: "26249554",
+            formId: "867b4fad-7c37-4c92-ac34-f2d7bb42a375",
+            target: "#hubspot-form-container",
+            
+            // Sobald das Formular gesendet wurde, funken wir an Wix
+            onFormSubmitted: function($form) {
+                console.log("Erfolg in GitHub-Datei! Sende Signal an Wix...");
+                // Die Brücke zur Wix-Hauptseite
+                window.parent.postMessage("HUB_SUCCESS", "*");
+            }
+        });
+    </script>
+
+</body>
+</html>

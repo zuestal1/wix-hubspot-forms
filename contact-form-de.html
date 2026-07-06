@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HubSpot Formular</title>
     <style>
-        /* Verhindert Ränder im Wix-Fenster */
-        body, html { margin: 0; padding: 0; font-family: sans-serif; overflow-x: hidden; }
+        /* Verhindert jegliche Scrollbalken innerhalb dieses Fensters */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            font-family: sans-serif; 
+            overflow: hidden !important; 
+            height: 100%;
+        }
     </style>
     <script src="https://js-eu1.hsforms.net/forms/embed/developer/26249554.js" defer></script>
 </head>
@@ -15,14 +21,12 @@
     <div class="hs-form-html" data-region="eu1" data-form-id="867b4fad-7c37-4c92-ac34-f2d7bb42a375" data-portal-id="26249554"></div>
 
     <script>
-        // Wir lauschen auf das globale HubSpot-Ereignis direkt im GitHub-Fenster
-        window.addEventListener("message", function(event) {
-            if (event.data && event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmitted') {
-                console.log("HubSpot-Erfolg im Iframe erkannt! Sende Signal an Wix...");
-                
-                // Der entscheidende Handschlag an die Wix-Hauptseite
-                window.parent.postMessage("HUB_SUCCESS", "*");
-            }
+        // HubSpot Forms V4 Event-Listener für das Tracking
+        window.addEventListener("hs-form-event:on-submission:success", function(event) {
+            console.log("Meldung aus GitHub: Formular erfolgreich gesendet!");
+            
+            // Signal an die Wix-Hauptseite senden
+            window.parent.postMessage("HUB_SUCCESS", "*");
         });
     </script>
 

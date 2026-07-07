@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HubSpot Formular</title>
     <style>
-        /* Verhindert jegliche Scrollbalken innerhalb dieses Fensters */
+        /* Verhindert jegliche Scrollbalken innerhalb des Wix-Fensters */
         body, html { 
             margin: 0; 
             padding: 0; 
             font-family: sans-serif; 
             overflow: hidden !important; 
             height: 100%;
+            background-color: transparent; /* Passt sich nahtlos an Wix an */
         }
     </style>
     <script src="https://js-eu1.hsforms.net/forms/embed/developer/26249554.js" defer></script>
@@ -21,12 +22,20 @@
     <div class="hs-form-html" data-region="eu1" data-form-id="ed97280a-67cb-4094-a87a-0dec5dcc5bb0" data-portal-id="26249554"></div>
 
     <script>
-        // HubSpot Forms V4 Event-Listener für das Tracking
+        // Sicherheits-Schloss: Verhindert, dass das Event doppelt an Wix gesendet wird
+        let trackingSchonGefeuert = false;
+
+        // Wir lauschen auf das offizielle V4-Erfolgs-Event von HubSpot
         window.addEventListener("hs-form-event:on-submission:success", function(event) {
-            console.log("Meldung aus GitHub: Formular erfolgreich gesendet!");
             
-            // Signal an die Wix-Hauptseite senden
-            window.parent.postMessage("HUB_SUCCESS", "*");
+            if (!trackingSchonGefeuert) {
+                trackingSchonGefeuert = true; // Schloss sofort verriegeln
+                
+                console.log("Meldung aus GitHub: Formular erfolgreich gesendet!");
+                
+                // Hochsichere Datenübergabe: Das Signal wird NUR an deine echte Domain akzeptiert
+                window.parent.postMessage("HUB_SUCCESS", "https://www.solskin.swiss");
+            }
         });
     </script>
 

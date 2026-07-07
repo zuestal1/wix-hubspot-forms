@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HubSpot Formular</title>
+    <style>
+        /* Verhindert jegliche Scrollbalken innerhalb dieses Fensters */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            font-family: sans-serif; 
+            overflow: hidden !important; 
+            height: 100%;
+        }
+    </style>
+    <script src="https://js-eu1.hsforms.net/forms/embed/developer/26249554.js" defer></script>
+</head>
+<body>
+    
+    <div class="hs-form-html" data-region="eu1" data-form-id="ed97280a-67cb-4094-a87a-0dec5dcc5bb0" data-portal-id="26249554"></div>
+
+    <script>
+        // HubSpot Forms V4 Event-Listener für das Tracking
+        window.addEventListener("hs-form-event:on-submission:success", function(event) {
+            console.log("Meldung aus GitHub: Formular erfolgreich gesendet!");
+            
+            // Signal an die Wix-Hauptseite senden
+            window.parent.postMessage("HUB_SUCCESS", "*");
+        });
+    </script>
+
+</body>
+</html>

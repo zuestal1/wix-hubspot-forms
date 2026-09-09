@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,10 +31,17 @@
             if (!trackingSchonGefeuert) {
                 trackingSchonGefeuert = true; // Schloss sofort verriegeln
                 
-                console.log("Meldung aus GitHub: Formular erfolgreich gesendet!");
+                // E-Mail-Eingabefeld im Formular abgreifen
+                var emailInput = document.querySelector('input[type="email"]') || document.querySelector('input[name="email"]');
+                var submittedEmail = emailInput ? emailInput.value : '';
+
+                console.log("Meldung aus GitHub: Formular erfolgreich gesendet! E-Mail:", submittedEmail);
                 
-                // Hochsichere Datenübergabe: Das Signal wird NUR an deine echte Domain akzeptiert
-                window.parent.postMessage("HUB_SUCCESS", "https://www.solskin.swiss");
+                // Hochsichere Datenübergabe mit Objekt-Payload an deine Domain
+                window.parent.postMessage({
+                    action: "HUB_SUCCESS",
+                    email: submittedEmail
+                }, "https://www.solskin.swiss");
             }
         });
     </script>
